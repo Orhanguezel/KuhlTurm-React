@@ -24,15 +24,20 @@ exports.createProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
+            new: true, // Güncellenmiş veriyi döndür
+            runValidators: true, // Validation çalıştır
         });
-        if (!product) return res.status(404).json({ success: false, message: 'Ürün bulunamadı' });
+
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Ürün bulunamadı" });
+        }
+
         res.status(200).json({ success: true, data: product });
     } catch (err) {
         res.status(400).json({ success: false, message: err.message });
     }
 };
+
 
 // Ürün sil
 exports.deleteProduct = async (req, res) => {
