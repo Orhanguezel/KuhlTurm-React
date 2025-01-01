@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const connections = {};
+const connections = {}; // Cache for database connections
 
 const connectDB = async (dbName) => {
     if (connections[dbName]) {
-        return connections[dbName];
+        return connections[dbName]; // Cache'e kaydedilmiş bağlantıyı döndür
     }
     try {
         const conn = mongoose.createConnection(`${process.env.MONGO_URI}/${dbName}`, {
@@ -14,7 +14,7 @@ const connectDB = async (dbName) => {
         conn.on('connected', () => console.log(`MongoDB connected to ${dbName}`));
         conn.on('error', (err) => console.error(`MongoDB error on ${dbName}:`, err.message));
 
-        connections[dbName] = conn;
+        connections[dbName] = conn; // Bağlantıyı cache'e kaydet
         return conn;
     } catch (err) {
         console.error(`MongoDB connection error for ${dbName}:`, err.message);
@@ -23,6 +23,8 @@ const connectDB = async (dbName) => {
 };
 
 module.exports = connectDB;
+
+
 
 
 
