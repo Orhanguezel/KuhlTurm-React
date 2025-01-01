@@ -7,7 +7,7 @@ const cors = require('cors');
 dotenv.config();
 
 // Veritabanı bağlantısı
-connectDB();
+connectDB(process.env.ARTICLES_DB); 
 
 const app = express();
 

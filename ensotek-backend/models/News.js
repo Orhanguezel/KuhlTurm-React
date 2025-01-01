@@ -5,10 +5,7 @@ const newsSchema = new mongoose.Schema({
     summary: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: Date, required: true },
-    image: { type: String, required: true }
+    image: { type: String, required: true },
 });
 
-module.exports = mongoose.model('News', newsSchema);
-
-
-
+module.exports = newsSchema; // Sadece schema döndürülüyor.

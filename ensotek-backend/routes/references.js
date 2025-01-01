@@ -4,13 +4,15 @@ const {
     getAllReferences,
     createReference,
     updateReference,
-    deleteReference
+    deleteReference,
 } = require('../controllers/referencesController');
 
-// Referans rotaları
 router.get('/', getAllReferences);
 router.post('/', createReference);
 router.put('/:id', updateReference);
 router.delete('/:id', deleteReference);
 
-module.exports = router; // Router nesnesini export ediyor
+module.exports = router;
+
+
+
