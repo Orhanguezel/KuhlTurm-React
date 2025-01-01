@@ -15,7 +15,6 @@ exports.getAllArticles = async (req, res) => {
     try {
         const ArticleModel = await initArticleModel();
         const articles = await ArticleModel.find();
-        console.log('Fetched Articles:', articles); // Verileri konsola yazdırın
         res.status(200).json({ success: true, data: articles });
     } catch (err) {
         console.error(err.message); // Hata mesajını yazdırın
