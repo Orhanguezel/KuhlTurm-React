@@ -27,11 +27,18 @@ const userSchema = new Schema({
 
 // Şifre hashleme
 userSchema.pre('save', async function (next) {
+    // Şifre değişmemişse bir sonraki middleware'e geç
     if (!this.isModified('password')) return next();
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
+
+// Şifre kontrolü
+
+userSchema.methods.checkPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+}
 
 module.exports = userSchema;
 

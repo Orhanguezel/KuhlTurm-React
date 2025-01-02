@@ -5,13 +5,16 @@ const {
     getAllArticles,
     createArticle,
     updateArticle,
-    deleteArticle
+    deleteArticle,
 } = require('../controllers/articleController');
+const authorize = require('../helpers/authorization');
 
-router.get('/', asyncHandler(getAllArticles));
-router.post('/', asyncHandler(createArticle));
-router.put('/:id', asyncHandler(updateArticle));
-router.delete('/:id', asyncHandler(deleteArticle));
+router.get('/', authorize(['user', 'admin']), asyncHandler(getAllArticles));
+router.post('/', authorize(['admin']), asyncHandler(createArticle));
+router.put('/:id', authorize(['admin']), asyncHandler(updateArticle));
+router.delete('/:id', authorize(['admin']), asyncHandler(deleteArticle));
 
 module.exports = router;
+
+
 

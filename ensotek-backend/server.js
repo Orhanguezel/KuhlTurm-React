@@ -1,21 +1,19 @@
 const express = require('express');
-const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require('cookie-parser'); // Cookie parser middleware
 const errorHandler = require('./middleware/errorHandler');
 
 // Ortam değişkenlerini yükle
 dotenv.config();
 
-// Veritabanı bağlantısı
-connectDB(process.env.ARTICLES_DB); 
-
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: true, credentials: true })); // CORS ile cookie kullanımı
 app.use(express.json()); // JSON verileri ayrıştırır
 app.use(express.urlencoded({ extended: true })); // Form verilerini ayrıştırır
+app.use(cookieParser()); // Cookie parser middleware'i ekledik
 
 // Rotalar
 app.use('/api/products', require('./routes/products')); // Ürün rotası
@@ -31,3 +29,4 @@ app.use(errorHandler);
 // Sunucu başlatma
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

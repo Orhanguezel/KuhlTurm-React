@@ -5,13 +5,16 @@ const {
     getAllNews,
     createNews,
     updateNews,
-    deleteNews
+    deleteNews,
 } = require('../controllers/newsController');
+const authorize = require('../helpers/authorization');
 
-// Haberler için rotalar
-router.get('/', asyncHandler(getAllNews));
-router.post('/', asyncHandler(createNews));
-router.put('/:id', asyncHandler(updateNews));
-router.delete('/:id', asyncHandler(deleteNews));
+// Haber rotaları
+router.get('/', authorize(['user', 'admin']), asyncHandler(getAllNews));
+router.post('/', authorize(['admin']), asyncHandler(createNews));
+router.put('/:id', authorize(['admin']), asyncHandler(updateNews));
+router.delete('/:id', authorize(['admin']), asyncHandler(deleteNews));
 
 module.exports = router;
+
+

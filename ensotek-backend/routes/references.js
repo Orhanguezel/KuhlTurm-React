@@ -7,13 +7,15 @@ const {
     updateReference,
     deleteReference,
 } = require('../controllers/referencesController');
+const authorize = require('../helpers/authorization');
 
-router.get('/', asyncHandler(getAllReferences));
-router.post('/', asyncHandler(createReference));
-router.put('/:id', asyncHandler(updateReference));
-router.delete('/:id', asyncHandler(deleteReference));
+router.get('/', authorize(['user', 'admin']), asyncHandler(getAllReferences));
+router.post('/', authorize(['admin']), asyncHandler(createReference));
+router.put('/:id', authorize(['admin']), asyncHandler(updateReference));
+router.delete('/:id', authorize(['admin']), asyncHandler(deleteReference));
 
 module.exports = router;
+
 
 
 

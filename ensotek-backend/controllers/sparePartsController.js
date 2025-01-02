@@ -1,4 +1,3 @@
-// controllers/sparePartsController.js
 const connectDB = require('../config/db');
 const SparePartSchema = require('../models/SparePart');
 const asyncHandler = require('express-async-handler');
@@ -22,8 +21,18 @@ exports.getAllSpareParts = asyncHandler(async (req, res) => {
 
 // Yeni yedek parça oluştur
 exports.createSparePart = asyncHandler(async (req, res) => {
+    const { name, category, stock, price } = req.body;
+
+    // Validation kontrolü
+    if (!name || !category || stock === undefined || price === undefined) {
+        return res.status(400).json({
+            success: false,
+            message: 'Tüm alanlar doldurulmalıdır: name, category, stock, price',
+        });
+    }
+
     const SparePart = await initSparePartModel();
-    const sparePart = await SparePart.create(req.body);
+    const sparePart = await SparePart.create({ name, category, stock, price });
     res.status(201).json({ success: true, data: sparePart });
 });
 

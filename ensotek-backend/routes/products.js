@@ -7,12 +7,16 @@ const {
     updateProduct,
     deleteProduct,
 } = require('../controllers/productsController');
+const authorize = require('../helpers/authorization');
 
-router.get('/', asyncHandler(getAllProducts));
-router.post('/', asyncHandler(createProduct));
-router.put('/:id', asyncHandler(updateProduct));
-router.delete('/:id', asyncHandler(deleteProduct));
+// Ürün rotaları
+router.get('/', authorize(['user', 'admin']), asyncHandler(getAllProducts));
+router.post('/', authorize(['admin']), asyncHandler(createProduct));
+router.put('/:id', authorize(['admin']), asyncHandler(updateProduct));
+router.delete('/:id', authorize(['admin']), asyncHandler(deleteProduct));
 
 module.exports = router;
+
+
 
 

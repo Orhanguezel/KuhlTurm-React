@@ -7,12 +7,16 @@ const {
     updateSparePart,
     deleteSparePart,
 } = require('../controllers/sparePartsController');
+const authorize = require('../helpers/authorization');
 
-router.get('/', asyncHandler(getAllSpareParts));
-router.post('/', asyncHandler(createSparePart));
-router.put('/:id', asyncHandler(updateSparePart));
-router.delete('/:id', asyncHandler(deleteSparePart));
+// Yedek parça rotaları
+router.get('/', authorize(['user', 'admin']), asyncHandler(getAllSpareParts));
+router.post('/', authorize(['admin']), asyncHandler(createSparePart));
+router.put('/:id', authorize(['admin']), asyncHandler(updateSparePart));
+router.delete('/:id', authorize(['admin']), asyncHandler(deleteSparePart));
 
 module.exports = router;
+
+
 
 

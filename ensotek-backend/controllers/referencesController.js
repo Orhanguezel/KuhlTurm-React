@@ -1,6 +1,7 @@
 const connectDB = require('../config/db');
 const ReferenceSchema = require('../models/Reference');
 const asyncHandler = require('express-async-handler');
+const authorize = require('../helpers/authorization');
 
 let ReferenceModel;
 
@@ -21,13 +22,29 @@ exports.getAllReferences = asyncHandler(async (req, res) => {
 
 // Yeni referans oluştur
 exports.createReference = asyncHandler(async (req, res) => {
+    // Authorization kontrolü
+    authorize(req, 'admin');
+
+    const { url, company_name, sector } = req.body;
+
+    // Validation kontrolü
+    if (!url || !company_name || !sector) {
+        return res.status(400).json({
+            success: false,
+            message: 'Tüm alanlar doldurulmalıdır: url, company_name, sector',
+        });
+    }
+
     const Reference = await initReferenceModel();
-    const reference = await Reference.create(req.body);
+    const reference = await Reference.create({ url, company_name, sector });
     res.status(201).json({ success: true, data: reference });
 });
 
 // Referansı güncelle
 exports.updateReference = asyncHandler(async (req, res) => {
+    // Authorization kontrolü
+    authorize(req, 'admin');
+
     const Reference = await initReferenceModel();
     const reference = await Reference.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -43,6 +60,9 @@ exports.updateReference = asyncHandler(async (req, res) => {
 
 // Referansı sil
 exports.deleteReference = asyncHandler(async (req, res) => {
+    // Authorization kontrolü
+    authorize(req, 'admin');
+
     const Reference = await initReferenceModel();
     const reference = await Reference.findByIdAndDelete(req.params.id);
 
