@@ -1,4 +1,5 @@
 const express = require('express');
+const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const {
     getAllProducts,
@@ -7,10 +8,10 @@ const {
     deleteProduct,
 } = require('../controllers/productsController');
 
-router.get('/', getAllProducts);
-router.post('/', createProduct);
-router.put('/:id', updateProduct);
-router.delete('/:id', deleteProduct);
+router.get('/', asyncHandler(getAllProducts));
+router.post('/', asyncHandler(createProduct));
+router.put('/:id', asyncHandler(updateProduct));
+router.delete('/:id', asyncHandler(deleteProduct));
 
 module.exports = router;
 

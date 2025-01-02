@@ -1,4 +1,5 @@
 const express = require('express');
+const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const {
     getAllNews,
@@ -8,9 +9,9 @@ const {
 } = require('../controllers/newsController');
 
 // Haberler için rotalar
-router.get('/', getAllNews); // Tüm haberler
-router.post('/', createNews); // Yeni haber oluştur
-router.put('/:id', updateNews); // Haberi güncelle
-router.delete('/:id', deleteNews); // Haberi sil
+router.get('/', asyncHandler(getAllNews));
+router.post('/', asyncHandler(createNews));
+router.put('/:id', asyncHandler(updateNews));
+router.delete('/:id', asyncHandler(deleteNews));
 
 module.exports = router;

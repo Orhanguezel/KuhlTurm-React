@@ -1,6 +1,6 @@
-// articleController.js
 const connectDB = require('../config/db');
 const ArticleSchema = require('../models/Article');
+const asyncHandler = require('express-async-handler');
 
 let Article;
 const initArticleModel = async () => {
@@ -11,74 +11,51 @@ const initArticleModel = async () => {
     return Article;
 };
 
-exports.getAllArticles = async (req, res) => {
-    try {
-        const ArticleModel = await initArticleModel();
-        const articles = await ArticleModel.find();
-        res.status(200).json({ success: true, data: articles });
-    } catch (err) {
-        console.error(err.message); // Hata mesajını yazdırın
-        res.status(500).json({ success: false, message: err.message });
+exports.getAllArticles = asyncHandler(async (req, res) => {
+    const ArticleModel = await initArticleModel();
+    const articles = await ArticleModel.find();
+    res.status(200).json({ success: true, data: articles });
+});
+
+exports.getArticleById = asyncHandler(async (req, res) => {
+    const ArticleModel = await initArticleModel();
+    const article = await ArticleModel.findOne({ id: req.params.id });
+    if (!article) {
+        return res.status(404).json({ success: false, message: 'Makale bulunamadı' });
     }
-};
+    res.status(200).json({ success: true, data: article });
+});
 
-exports.getArticleById = async (req, res) => {
-    try {
-        const ArticleModel = await initArticleModel();
-        const article = await ArticleModel.findOne({ id: req.params.id });
-        if (!article) {
-            return res.status(404).json({ success: false, message: 'Makale bulunamadı' });
-        }
-        res.status(200).json({ success: true, data: article });
-    } catch (err) {
-        res.status(500).json({ success: false, message: err.message });
+exports.createArticle = asyncHandler(async (req, res) => {
+    const ArticleModel = await initArticleModel();
+    const { title, id, summary, content } = req.body;
+
+    if (!title || !id || !summary || !content) {
+        return res.status(400).json({ success: false, message: 'Tüm alanlar doldurulmalıdır: title, id, summary, content' });
     }
-};
 
-exports.createArticle = async (req, res) => {
-    try {
-        const ArticleModel = await initArticleModel();
-        const { title, id, summary, content } = req.body;
+    const newArticle = await ArticleModel.create({ title, id, summary, content });
+    res.status(201).json({ success: true, data: newArticle });
+});
 
-        if (!title || !id || !summary || !content) {
-            return res.status(400).json({ success: false, message: 'Tüm alanlar doldurulmalıdır: title, id, summary, content' });
-        }
-
-        const newArticle = await ArticleModel.create({ title, id, summary, content });
-        res.status(201).json({ success: true, data: newArticle });
-    } catch (err) {
-        res.status(400).json({ success: false, message: err.message });
+exports.updateArticle = asyncHandler(async (req, res) => {
+    const ArticleModel = await initArticleModel();
+    const updatedArticle = await ArticleModel.findOneAndUpdate(
+        { id: req.params.id },
+        req.body,
+        { new: true, runValidators: true }
+    );
+    if (!updatedArticle) {
+        return res.status(404).json({ success: false, message: 'Makale bulunamadı' });
     }
-};
+    res.status(200).json({ success: true, data: updatedArticle });
+});
 
-exports.updateArticle = async (req, res) => {
-    try {
-        const ArticleModel = await initArticleModel();
-        const updatedArticle = await ArticleModel.findOneAndUpdate(
-            { id: req.params.id },
-            req.body,
-            { new: true, runValidators: true }
-        );
-        if (!updatedArticle) {
-            return res.status(404).json({ success: false, message: 'Makale bulunamadı' });
-        }
-        res.status(200).json({ success: true, data: updatedArticle });
-    } catch (err) {
-        res.status(400).json({ success: false, message: err.message });
+exports.deleteArticle = asyncHandler(async (req, res) => {
+    const ArticleModel = await initArticleModel();
+    const deletedArticle = await ArticleModel.findOneAndDelete({ id: req.params.id });
+    if (!deletedArticle) {
+        return res.status(404).json({ success: false, message: 'Makale bulunamadı' });
     }
-};
-
-exports.deleteArticle = async (req, res) => {
-    try {
-        const ArticleModel = await initArticleModel();
-        const deletedArticle = await ArticleModel.findOneAndDelete({ id: req.params.id });
-        if (!deletedArticle) {
-            return res.status(404).json({ success: false, message: 'Makale bulunamadı' });
-        }
-        res.status(200).json({ success: true, message: 'Makale silindi', data: deletedArticle });
-    } catch (err) {
-        console.error('Delete Error:', err.message);
-        res.status(500).json({ success: false, message: err.message });
-    }
-};
-
+    res.status(200).json({ success: true, message: 'Makale silindi', data: deletedArticle });
+});

@@ -1,4 +1,5 @@
 const express = require('express');
+const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const {
     getAllSpareParts,
@@ -7,10 +8,10 @@ const {
     deleteSparePart,
 } = require('../controllers/sparePartsController');
 
-router.get('/', getAllSpareParts);
-router.post('/', createSparePart);
-router.put('/:id', updateSparePart);
-router.delete('/:id', deleteSparePart);
+router.get('/', asyncHandler(getAllSpareParts));
+router.post('/', asyncHandler(createSparePart));
+router.put('/:id', asyncHandler(updateSparePart));
+router.delete('/:id', asyncHandler(deleteSparePart));
 
 module.exports = router;
 

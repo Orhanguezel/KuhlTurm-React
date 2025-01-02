@@ -1,4 +1,5 @@
 const express = require('express');
+const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const {
     login,
@@ -7,10 +8,10 @@ const {
     deleteProfileImage,
 } = require('../controllers/authController');
 
-router.post('/login', login); // login fonksiyonu authController'da tanımlı olmalı
-router.post('/register', register); // register fonksiyonu authController'da tanımlı olmalı
-router.put('/profile-image', updateProfileImage); // updateProfileImage fonksiyonu tanımlı olmalı
-router.delete('/profile-image', deleteProfileImage); // deleteProfileImage fonksiyonu tanımlı olmalı
+router.post('/login', asyncHandler(login));
+router.post('/register', asyncHandler(register));
+router.put('/profile-image', asyncHandler(updateProfileImage));
+router.delete('/profile-image', asyncHandler(deleteProfileImage));
 
 module.exports = router;
 

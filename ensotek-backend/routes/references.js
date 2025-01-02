@@ -1,4 +1,5 @@
 const express = require('express');
+const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const {
     getAllReferences,
@@ -7,10 +8,10 @@ const {
     deleteReference,
 } = require('../controllers/referencesController');
 
-router.get('/', getAllReferences);
-router.post('/', createReference);
-router.put('/:id', updateReference);
-router.delete('/:id', deleteReference);
+router.get('/', asyncHandler(getAllReferences));
+router.post('/', asyncHandler(createReference));
+router.put('/:id', asyncHandler(updateReference));
+router.delete('/:id', asyncHandler(deleteReference));
 
 module.exports = router;
 
