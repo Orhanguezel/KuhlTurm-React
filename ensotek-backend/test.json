@@ -1,6 +1,6 @@
 {
     "info": {
-        "name": "Ensotek Backend API Updated Tests",
+        "name": "Ensotek Backend API Full Tests",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
@@ -51,6 +51,25 @@
             }
         },
         {
+            "name": "Get Articles",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer USER_OR_ADMIN_TOKEN_HERE"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/articles",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": ["api", "articles"]
+                }
+            }
+        },
+        {
             "name": "Create Article (Admin Only)",
             "request": {
                 "method": "POST",
@@ -75,44 +94,6 @@
                     "host": ["localhost"],
                     "port": "5000",
                     "path": ["api", "articles"]
-                }
-            }
-        },
-        {
-            "name": "Get Articles",
-            "request": {
-                "method": "GET",
-                "header": [
-                    {
-                        "key": "Authorization",
-                        "value": "Bearer USER_OR_ADMIN_TOKEN_HERE"
-                    }
-                ],
-                "url": {
-                    "raw": "http://localhost:5000/api/articles",
-                    "protocol": "http",
-                    "host": ["localhost"],
-                    "port": "5000",
-                    "path": ["api", "articles"]
-                }
-            }
-        },
-        {
-            "name": "Delete Article (Admin Only)",
-            "request": {
-                "method": "DELETE",
-                "header": [
-                    {
-                        "key": "Authorization",
-                        "value": "Bearer ADMIN_TOKEN_HERE"
-                    }
-                ],
-                "url": {
-                    "raw": "http://localhost:5000/api/articles/ARTICLE_ID_HERE",
-                    "protocol": "http",
-                    "host": ["localhost"],
-                    "port": "5000",
-                    "path": ["api", "articles", "ARTICLE_ID_HERE"]
                 }
             }
         },
@@ -160,6 +141,100 @@
                     "host": ["localhost"],
                     "port": "5000",
                     "path": ["api", "products"]
+                }
+            }
+        },
+        {
+            "name": "Get Spare Parts",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer USER_OR_ADMIN_TOKEN_HERE"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/spare-parts",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": ["api", "spare-parts"]
+                }
+            }
+        },
+        {
+            "name": "Create Spare Part (Admin Only)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer ADMIN_TOKEN_HERE"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Battery\",\n    \"category\": \"Electronics\",\n    \"price\": 50,\n    \"stock\": 100\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5000/api/spare-parts",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": ["api", "spare-parts"]
+                }
+            }
+        },
+        {
+            "name": "Get References",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer USER_OR_ADMIN_TOKEN_HERE"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5000/api/references",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": ["api", "references"]
+                }
+            }
+        },
+        {
+            "name": "Create Reference (Admin Only)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer ADMIN_TOKEN_HERE"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"url\": \"https://example.com\",\n    \"company_name\": \"Example Company\",\n    \"sector\": \"IT\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5000/api/references",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "5000",
+                    "path": ["api", "references"]
                 }
             }
         }
