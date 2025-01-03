@@ -336,3 +336,108 @@ Bu yapıyla backend kısmı organize edilmiştir. İlk olarak veritabanı bağla
 
 
 db.updateUser("admin", { pwd: "newsecurepassword" })
+
+
+
+
+
+### **Ensotek Su Soğutma Kulesi Fabrikası Web Sayfası Backend Geliştirme Yol Haritası: Güncel Durum**
+
+#### **Tamamlanan Adımlar**
+
+1. **Proje Ortamının Hazırlanması**
+   - Node.js ve MongoDB kuruldu.
+   - Proje dizin yapısı oluşturuldu.
+   - Gerekli bağımlılıklar yüklendi (`express`, `mongoose`, `dotenv`, `body-parser`, `cors`).
+   - `.env` dosyası oluşturuldu ve gerekli ortam değişkenleri eklendi.
+   - Temel proje giriş dosyası olan `server.js` oluşturuldu.
+
+2. **Veritabanı Tasarımı**
+   - MongoDB modelleri tanımlandı:
+     - **User**: Kullanıcı modeli.
+     - **Product**: Ürün modeli.
+     - **Article**: Makale modeli.
+     - **SparePart**: Yedek malzeme modeli.
+     - **News**: Haber modeli.
+     - **Reference**: Referans firma modeli.
+
+3. **API Endpoint’lerinin Geliştirilmesi**
+   - CRUD işlemleri için temel rotalar ve controller’lar oluşturuldu:
+     - **Authentication (Kullanıcı İşlemleri)**:
+       - `/auth/register`, `/auth/login`, `/auth/logout`.
+     - **Ürünler**:
+       - `/products` için GET, POST, PUT, DELETE işlemleri.
+     - **Makaleler**:
+       - `/articles` için CRUD işlemleri.
+     - **Yedek Malzemeler**:
+       - `/spare-parts` için CRUD işlemleri.
+     - **Haberler**:
+       - `/news` için CRUD işlemleri.
+     - **Referans Firmalar**:
+       - `/references` için CRUD işlemleri.
+   - Middleware ve hata yakalama mekanizmaları eklendi.
+
+4. **Test Süreci**
+   - Postman kullanılarak tüm endpoint’ler test edildi.
+   - CRUD işlemlerinin hepsi başarıyla çalıştırıldı ve doğrulandı.
+
+#### **Kalan Adımlar**
+
+1. **JWT ile Yetkilendirme ve Rol Tabanlı Erişim Kontrolü**
+   - Kullanıcıların JWT ile kimlik doğrulaması ve yetkilendirme işlemlerinin tamamen uygulanması.
+   - **Admin** ve **User** rollerine göre erişim kısıtlamalarının daha detaylı uygulanması.
+
+2. **Hata Yönetimi ve Gelişmiş Middleware**
+   - **Hata yakalama mekanizması** (ör. 404, 500 hataları) geliştirilmesi ve kapsamlı hale getirilmesi.
+   - Detaylı hata mesajlarının kullanıcıya ve log dosyasına yönlendirilmesi.
+
+3. **Kod Optimizasyonu ve Refaktör**
+   - Controller ve middleware dosyalarının düzenlenmesi.
+   - Fazladan tekrar eden kodların yeniden kullanılır hale getirilmesi.
+   - **Utils/logger.js** gibi araçlarla loglama yapılması.
+
+4. **Dokümantasyon**
+   - Swagger veya Postman üzerinden API dokümantasyonu hazırlanması.
+   - Endpoint’lerin, istek/yanıt yapılarını ve örnekleri içeren tam bir dokümantasyon oluşturulması.
+
+5. **Veritabanı İlişkileri ve Validasyon**
+   - Modeller arasındaki ilişkilerin daha detaylı şekilde yapılandırılması.
+   - Örneğin, bir ürünle ilişkili bir yedek parça veya makale bağlantısı eklenmesi.
+   - Gelişmiş validasyon işlemlerinin uygulanması (ör. fiyatın pozitif bir sayı olması, tarih formatları vb.).
+
+6. **Backend Dağıtımı**
+   - Backend uygulamasının bir sunucuya dağıtımı (ör. AWS, Heroku veya DigitalOcean).
+   - CI/CD entegrasyonu ile otomatik dağıtım süreci.
+
+7. **Performans ve Güvenlik İyileştirmeleri**
+   - API performans testleri ve iyileştirmeler.
+   - Rate limiting, helmet gibi güvenlik paketlerinin entegrasyonu.
+
+8. **Frontend Entegrasyonu**
+   - React veya başka bir frontend framework ile backend API'nin entegre edilmesi.
+   - Kullanıcı dostu bir arayüz oluşturulması.
+
+---
+
+### **Yeniden Düzenlenmiş Yol Haritası**
+
+#### **Aşama 1: Mevcut Durum**
+- Veritabanı modelleri tamamlandı.
+- CRUD işlemleri test edildi ve başarıyla çalıştı.
+- Proje çalışır durumda.
+
+#### **Aşama 2: Kısa Vadeli Görevler**
+1. JWT kimlik doğrulama ve yetkilendirme sistemini geliştirin.
+2. Hata yönetimini ve loglama mekanizmalarını tamamlayın.
+3. Kod bazında optimizasyon ve refaktör işlemleri gerçekleştirin.
+
+#### **Aşama 3: Orta Vadeli Görevler**
+1. Swagger dokümantasyonu oluşturun.
+2. Daha karmaşık veritabanı ilişkilerini yapılandırın.
+3. Backend uygulamasını bir dağıtım platformunda yayınlayın.
+
+#### **Aşama 4: Uzun Vadeli Görevler**
+1. Performans ve güvenlik optimizasyonları uygulayın.
+2. Frontend geliştirmeye başlayın ve backend ile entegre edin.
+
+Bu güncel yol haritası ile projenin eksiksiz bir şekilde ilerlemesini sağlayabiliriz. Hangi adımdan devam etmek istersiniz? 🚀

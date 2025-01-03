@@ -1,8 +1,6 @@
-// errorHandler.js
-
 // Genel hata yönetimi middleware'i
 module.exports = (err, req, res, next) => {
-    console.error(err.stack); // Hata loglama
+    console.error('Hata Ayrıntıları:', err.stack); // Hata loglama
 
     const statusCode = err.status || 500; // Varsayılan olarak 500
 
@@ -36,21 +34,14 @@ module.exports = (err, req, res, next) => {
         });
     }
 
-    if (err.name === 'JsonWebTokenError') {
-        // JWT hatası
+    if (['JsonWebTokenError', 'TokenExpiredError'].includes(err.name)) {
+        // JWT hataları
         return res.status(401).json({
             success: false,
-            errorType: 'JsonWebTokenError',
-            message: 'Invalid token. Please log in again.',
-        });
-    }
-
-    if (err.name === 'TokenExpiredError') {
-        // JWT süresi dolmuş
-        return res.status(401).json({
-            success: false,
-            errorType: 'TokenExpiredError',
-            message: 'Your token has expired. Please log in again.',
+            errorType: err.name,
+            message: err.name === 'JsonWebTokenError' 
+                ? 'Invalid token. Please log in again.' 
+                : 'Your token has expired. Please log in again.',
         });
     }
 
@@ -126,6 +117,16 @@ module.exports = (err, req, res, next) => {
         });
     }
 
+    // Ek hata türlerini yönetmek için genişletilebilir alan
+    if (err.name === 'CustomError') {
+        // Özel hata türleri
+        return res.status(err.status || 400).json({
+            success: false,
+            errorType: 'CustomError',
+            message: err.message || 'A custom error occurred.',
+        });
+    }
+
     // Diğer hatalar için varsayılan yanıt
     res.status(statusCode).json({
         success: false,
@@ -133,5 +134,5 @@ module.exports = (err, req, res, next) => {
         message: err.message || 'An unexpected error occurred.',
     });
 
-    next(); // Sonraki middleware'e geç (gerekli değil, son middleware olduğu varsayılır)
+    next(); // Sonraki middleware'e geç (genelde gereksizdir çünkü son middleware olduğu varsayılır)
 };

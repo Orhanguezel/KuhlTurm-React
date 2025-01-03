@@ -3,16 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const userSchema = require('../models/User');
 const asyncHandler = require('express-async-handler');
-
-// JWT token'ı cookie'ye yazan yardımcı fonksiyon
-const setTokenCookie = (res, token, maxAge = 24 * 60 * 60 * 1000) => {
-    res.cookie('token', token, {
-        httpOnly: true, // XSS koruması
-        secure: process.env.NODE_ENV === 'production', // HTTPS altında secure cookie
-        maxAge, // Belirtilen süre kadar geçerli
-        sameSite: 'strict', // CSRF koruması
-    });
-};
+const { setTokenCookie } = require('../utils/jwtHelpers'); // Helper'dan setTokenCookie import edilir
 
 // Kullanıcı kayıt işlemi
 exports.register = asyncHandler(async (req, res) => {
@@ -144,4 +135,24 @@ exports.updateUser = asyncHandler(async (req, res) => {
     res.status(200).json({ success: true, data: updatedUser });
 });
 
+// Refresh token endpoint
+exports.refreshToken = asyncHandler(async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
 
+    if (!refreshToken) {
+        return res.status(401).json({ success: false, message: 'Refresh token gerekli' });
+    }
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+        const newAccessToken = jwt.sign({ id: decoded.id, role: decoded.role }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRATION || '15m',
+        });
+
+        setTokenCookie(res, newAccessToken); // Yeni access token cookie'ye eklenir
+
+        res.status(200).json({ success: true, token: newAccessToken });
+    } catch (err) {
+        res.status(401).json({ success: false, message: 'Refresh token geçersiz' });
+    }
+});
