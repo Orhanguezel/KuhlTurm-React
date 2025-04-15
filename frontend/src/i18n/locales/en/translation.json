@@ -1,0 +1,128 @@
+{
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "products": "Products",
+    "blog": "Blog",
+    "appointment": "Appointment",
+    "login": "Login",
+    "register": "Register",
+    "profile": "My Profile"
+  },
+  "home": {
+    "aboutTitle": "About Us",
+    "aboutText": "Natural solutions for body, mind and soul",
+    "aboutLink": "Learn More →",
+    "heroTitle": "Königs Massage",
+    "heroSubtitle": "Pamper your health with the touch of nature",
+    "cta": "🟣 Book Appointment Online",
+    "services": {
+      "title": "Our Services",
+      "aromatherapy": "Aromatherapy Massage",
+      "reflexology": "Reflexology",
+      "deepTissue": "Deep Tissue Massage",
+      "antiCellulite": "Anti-cellulite Massage",
+      "all": "View All Services →"
+    },
+    "products": {
+      "title": "Featured Products",
+      "addToCart": "Add to Cart",
+      "all": "View All Products →"
+    },
+    "blog": {
+      "title": "From Our Blog",
+      "readMore": "Read More →",
+      "all": "View All Blog Posts →"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email"
+  },
+  "footer": {
+    "privacy": "Privacy",
+    "kvkk": "KVKK",
+    "about": "About Us",
+    "appointment": "Appointment",
+    "rights": "All rights reserved."
+  },
+  "services": {
+    "title": "All Our Services",
+    "items": [
+      {
+        "name": "Aromatherapy Massage",
+        "description": "A relaxing massage type performed with herbal oils."
+      },
+      {
+        "name": "Reflexology",
+        "description": "Stimulates internal organs by applying pressure to the soles of the feet."
+      },
+      {
+        "name": "Deep Tissue Massage",
+        "description": "An intense pressure massage that affects the musculoskeletal system."
+      },
+      {
+        "name": "Anti-cellulite Massage",
+        "description": "Applied with special techniques to improve circulation under the skin."
+      }
+    ]
+  },
+  "products": {
+    "all": "All Products",
+    "addToCart": "Add to Cart",
+    "noDescription": "No product description available."
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login",
+    "loading": "Logging in...",
+    "success": "🎉 Successfully logged in!",
+    "error": "❌ Login failed. Please check your credentials."
+  },
+  "register": {
+    "title": "Register",
+    "name": "Your Name",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Register",
+    "loading": "Registering...",
+    "success": "✅ Registration successful! Redirecting to login...",
+    "error": "❌ Registration failed. Please check your info."
+  },
+  "profile": {
+    "title": "My Profile",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "updateButton": "Update Profile",
+    "uploadImage": "Upload Profile Picture",
+    "success": "Profile updated successfully.",
+    "error": "An error occurred.",
+    "selectImage": "Select Image",
+    "changeImage": "Change Image",
+    "image": {
+      "label": "Profile Picture",
+      "loading": "Uploading..."
+    }
+  },
+  "account": {
+    "image": {
+      "change": "Change Photo",
+      "uploading": "Uploading..."
+    },
+    "title": "Profile",
+  "loading": "Loading...",
+  "error": "An error occurred.",
+  "updateSuccess": "Profile updated successfully.",
+  "imageUpdateSuccess": "Profile picture uploaded successfully.",
+  "uploadLabel": "Select a new profile image",
+  "name": "Full Name",
+  "email": "Email",
+  "phone": "Phone",
+  "save": "Save"
+}
+}
